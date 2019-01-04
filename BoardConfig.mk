@@ -17,7 +17,7 @@
 LOCAL_PATH := device/digma/fh05ahgo
 
 # Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := fh05ahgo
+TARGET_BOOTLOADER_BOARD_NAME := mt6739
 TARGET_NO_BOOTLOADER := true
 
 # Platform
@@ -30,8 +30,10 @@ TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := cortex-a53
 
+BOARD_USES_MTK_HARDWARE := true
+
 # Kernel properties
-BOARD_KERNEL_CMDLINE := bootopt=64S3,32S1,32S1 buildvariant=user androidboot.selinux=permissive
+BOARD_KERNEL_CMDLINE := bootopt=64S3,32S1,32S1 buildvariant=user
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_BASE = 0x40000000
 BOARD_RAMDISK_OFFSET = 0x05000000
@@ -59,7 +61,8 @@ HAVE_SELINUX := true
 DEVICE_RESOLUTION := 480x960
 TW_IGNORE_MAJOR_AXIS_0 := true
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
-BOARD_HAS_NO_REAL_SDCARD := true
+BOARD_HAS_NO_REAL_SDCARD := false
+TW_ALLOW_PARTITION_SDCARD := true
 RECOVERY_SDCARD_ON_DATA := true
 TW_DEFAULT_EXTERNAL_STORAGE := true
 # TW_INTERNAL_STORAGE_PATH := "/data/media"
@@ -68,13 +71,24 @@ TW_EXTERNAL_STORAGE_PATH := "/external_sd"
 TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
 # TW_THEME := portrait_hdpi
 TW_NO_REBOOT_BOOTLOADER := false
-TW_INCLUDE_CRYPTO := true
+#TW_INCLUDE_CRYPTO := true
 # USB Mounting
-#TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun%d/file
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.usb0/lun.0/file
 TW_BRIGHTNESS_PATH := /sys/devices/platform/leds-mt65xx/leds/lcd-backlight/brightness
 # Misc
 TW_NO_SCREEN_TIMEOUT := true
 TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
 TW_DEFAULT_LANGUAGE := ru
 TW_DEVICE_VERSION := by mehanik6
+#TW_CRYPTO_USE_SYSTEM_VOLD := true
 TW_EXCLUDE_SUPERSU := true
+TW_MTP_DEVICE := /dev/mtp_usb
+TW_HAS_MTP := true
+ARCH_ARM_HAVE_NEON := true
+ARCH_ARM_HAVE_ARMV7A := true
+
+# Crypto
+#TARGET_HW_DISK_ENCRYPTION := true
+TW_INCLUDE_CRYPTO := true
+#TW_INCLUDE_FBE := true
+#ALLOW_MISSING_DEPENDENCIES := true

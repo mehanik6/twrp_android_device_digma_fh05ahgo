@@ -1,3 +1,6 @@
+#import /init.mt6739.usb.rc
+#import /init.usb.configfs.rc
+
 on init
     mkdir /config
     mount configfs none /config
@@ -14,56 +17,10 @@ on init
 
     exec u:r:recovery:s0 -- /sbin/mntl_link
 
-service keymaster-3-0 /sbin/android.hardware.keymaster@3.0-service
-    class early_hal
-    user root
-    group root drmrpc
-    seclabel u:r:recovery:s0
-
-service gatekeeper-1-0 /sbin/android.hardware.gatekeeper@1.0-service
-    class hal
-    user root
-    group root
-    seclabel u:r:recovery:s0
-
-service hwservicemanager /sbin/hwservicemanager
-    user root
-    disabled
-    group root readproc
-    critical
-    onrestart setprop hwservicemanager.ready false
-    onrestart class_restart hal
-    onrestart class_restart early_hal
-    writepid /dev/cpuset/system-background/tasks
-    class animation
-    shutdown critical
-    seclabel u:r:recovery:s0
-
-service servicemanager /sbin/servicemanager
-    class core animation
-    user root
-    disabled
-    group root readproc
-    critical
-    onrestart restart drm
-    writepid /dev/cpuset/system-background/tasks
-    shutdown critical
-    seclabel u:r:recovery:s0
-
-service keystore /sbin/keystore /data/misc/keystore
-    class main
-    user root
-    disabled
-    group root drmrpc readproc
-    writepid /dev/cpuset/foreground/tasks
-    seclabel u:r:recovery:s0
-
-on property:ro.crypto.state=encrypted
-    start hwservicemanager
-    start keymaster-3-0
-    start gatekeeper-1-0
-    start keystore
-    start servicemanager
+on post-fs-data
+# Support A/B feature for boot region
+    symlink /dev/block/mmcblk0boot0 /dev/block/platform/bootdevice/by-name/preloader_a
+    symlink /dev/block/mmcblk0boot1 /dev/block/platform/bootdevice/by-name/preloader_b
 
 on property:ro.debuggable=0
     # distinguish USB shoulde connect or not, i.e. CDP vs SDP
