@@ -73,7 +73,7 @@ TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
 TW_NO_REBOOT_BOOTLOADER := false
 #TW_INCLUDE_CRYPTO := true
 # USB Mounting
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.usb0/lun.0/file
+#TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.usb0/lun.0/file
 TW_BRIGHTNESS_PATH := /sys/devices/platform/leds-mt65xx/leds/lcd-backlight/brightness
 # Misc
 TW_NO_SCREEN_TIMEOUT := true
@@ -88,7 +88,12 @@ ARCH_ARM_HAVE_NEON := true
 ARCH_ARM_HAVE_ARMV7A := true
 
 # Crypto
-#TARGET_HW_DISK_ENCRYPTION := true
+TW_CRYPTO_FS_TYPE := "ext4"
+TW_CRYPTO_REAL_BLKDEV := "/dev/block/platform/bootdevice/by-name/userdata" 
+TW_CRYPTO_MNT_POINT := "/data"
+#TW_CRYPTO_KEY_LOC := "footer"
+TW_CRYPTO_FS_OPTIONS := "nosuid,nodev,noatime,discard,noauto_da_alloc,data =ordered"
+#TW_INCLUDE_L_CRYPTO := true
 TW_INCLUDE_CRYPTO := true
-#TW_INCLUDE_FBE := true
-#ALLOW_MISSING_DEPENDENCIES := true
+
+ALLOW_MISSING_DEPENDENCIES := true

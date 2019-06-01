@@ -31,3 +31,6 @@ PRODUCT_NAME := omni_fh05ahgo
 PRODUCT_BRAND := digma
 PRODUCT_MODEL := Linx Base 4G LT5052ML
 PRODUCT_MANUFACTURER := digma
+
+
+
